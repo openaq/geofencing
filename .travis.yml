@@ -10,7 +10,7 @@ cache:
 script:
 - npm run build
 after_success:
-- mkdir dist && cp
+- mkdir dist && cp bundle.js index.html devices.min.css stations.json styles.css zone.geojson dist
 deploy:
   provider: s3
   skip_cleanup: true
