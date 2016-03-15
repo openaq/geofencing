@@ -11,7 +11,7 @@ var screenWidth = document.documentElement.clientWidth;
 var screenHeight = document.documentElement.clientHeight;
 
 // map loads with different zoom / center depending on the type of device
-var zoom = screenWidth < 700 ? 10.5 : screenHeight <= 600 || screenWidth < 1000 ? 11.5 : 12;
+var zoom = screenWidth < 700 ? 10.5 : screenHeight <= 600 || screenWidth < 1000 ? 10.5 : 11.5;
 var center = screenWidth < 700 ? [-0.149688720703125,51.48865188163204] : [-0.15003204345703125, 51.50489601254001];
 
 
@@ -32,6 +32,35 @@ if (screenHeight <= 600) {
 
 if (map.screenWidth < 700) {
   map.dragPan.disable();
+}
+
+map.createStationsGeoJSON = function (data) {
+  // Create stations geojson
+  var geojson = {
+    'type': 'geojson',
+    'data': {
+      'type': 'FeatureCollection',
+      'features': []
+    }
+  };
+
+  Object.keys(data).forEach(function (k) {
+    var s = data[k];
+    var f = {
+      'type': 'Feature',
+      'geometry': {
+        'type': 'Point',
+        'coordinates': [s.coordinates.longitude, s.coordinates.latitude]
+      },
+      'properties': {
+        'title': k,
+        'value': data[k].value
+      }
+    }
+    geojson.data.features.push(f);
+  });
+
+  return geojson;
 }
 
 

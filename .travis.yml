@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+- '4.2'
+env:
+  global:
+  - DEPLOY_BRANCH=master
+cache:
+  directories:
+  - node_modules
+script:
+- npm run build
+after_success:
+- mkdir dist && cp
+deploy:
+  provider: s3
+  skip_cleanup: true
+  access_key_id: AKIAIHACHLPCT2PIL4TA
+  secret_access_key:
+    secure: mQ/AqzgU9meuoz7yvbX3hmAbp9VB11L0QMwzmWc4nvC7t6dQpb2ZVWENZWwS5ikev9OuZph7C/kgo/8z/x83nfsoSAHfa5MwSnKUxjStTQ2R1ealNaaLT4yNUDoYzltYXc+9lxnCiJg62QZwJWi5ZONeKpP763ziQd1mcY3Lkr9nLVyLhCeS7OCataDdiIE4h8K9fCDCpu/Jf5XpkeuWgsCYDVP9+J5Ya2VAo90KfIhSwRc1SXni6hOOySraYpiDEAFymLicBOJGc4Tm28XBYjuxYpFSmbWHsPTBDk5iN7M4vPtsp/UK7BCHzQKHSkZMOH61ztBQKTLUmBhTUbaDzpZSDB28hMcAEQ8j6ZU4d8qsnZNRwOf13tUYlbkt93g/ev8oYoPXgL4V0PflJ3RcMcj8jUADAnX8Cm78fMnYc37XQNzI0ko9Fle7KMj4VZeMey+4pRThGHu/B1WDVSQEw22sOrbjGktZudWg9GAVqwj87bdH7Jhn2KYeE0c0xOjmAUZbIqjuHqTINJfVecMpU7GAuizv2/sDRIIFs9Wp8X1CU0GQd5RIDwb3H4mWbEnLSY8oc/Jxs/+FWSHa0+iFse3Pmei45nToKZ5xpW7OfKsa/kYzOQUUW7jOZoVKSnJD4QHVRVZuLf3+Ni1sQLa82eUczDVPoq6oGnjViYLZsCA=
+  bucket: labs.openaq.org
+  local-dir: dist
+  upload-dir: london-traffic
+  acl: public_read
+  on:
+    repo: openaq/geofencing
+    branch: ${DEPLOY_BRANCH}

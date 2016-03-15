@@ -1,11 +1,12 @@
 'use strict';
 
-// global mapboxgl 
+// global mapboxgl
 window.mapboxgl = require('mapbox-gl');
 // included modules
 
 var fs = require('fs');
 var path = require('path');
+var stations = require('../stations');
 
 // dependency modules
 var turf = require('turf');
@@ -37,6 +38,56 @@ map.on('style.load', function() {
         'line-width': 5,
         'line-opacity': .5,
         'line-color': '#C96F16'
+      }
+    });
+
+    map.addSource('stations', map.createStationsGeoJSON(stations));
+
+    map.addLayer({
+      'id': 'stations-green',
+      'type': 'circle',
+      'source': 'stations',
+      'paint': {
+        'circle-radius': 8,
+        'circle-color': 'green'
+      },
+      'filter': [ 'all', [ '<', 'value', 20 ] ]
+    });
+
+    map.addLayer({
+      'id': 'stations-yellow',
+      'type': 'circle',
+      'source': 'stations',
+      'paint': {
+        'circle-radius': 8,
+        'circle-color': '#ECEC00'
+      },
+      'filter': [ 'all',
+          [ '>=', 'value', 20 ],
+          [ '<', 'value', 50 ] ]
+    });
+
+    map.addLayer({
+      'id': 'stations-red',
+      'type': 'circle',
+      'source': 'stations',
+      'paint': {
+        'circle-radius': 8,
+        'circle-color': 'red'
+      },
+      'filter': [ 'all', [ '>=', 'value', 50 ] ]
+    });
+
+    map.addLayer({
+      'id': 'stations-text',
+      'type': 'symbol',
+      'source': 'stations',
+      'layout': {
+        'text-field': '{title}',
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+        'text-offset': [0, 0.6],
+        'text-anchor': 'top',
+        'text-size': 12
       }
     });
 

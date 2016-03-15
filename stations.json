@@ -1,0 +1,14 @@
+{
+  'London Bloomsbury':
+   { city: 'London', value: 0,
+     coordinates: { latitude: 51.52229, longitude: -0.125889 } },
+  'London N. Kensington':
+   { city: 'London', value: 0,
+     coordinates: { latitude: 51.52105, longitude: -0.213492 } },
+  'London Marylebone Road':
+   { city: 'London', value: 0,
+     coordinates: { latitude: 51.52253, longitude: -0.154611 } },
+  'London Westminster':
+   { city: 'London', value: 0,
+     coordinates: { latitude: 51.49467, longitude: -0.131931 } },
+}
